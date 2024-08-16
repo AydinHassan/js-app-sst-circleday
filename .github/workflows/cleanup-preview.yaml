@@ -1,0 +1,30 @@
+name: cleanup preview
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  cleanup:
+    name: cleanup preview
+    runs-on: shopware-arm64
+    container: ghcr.io/catthehacker/ubuntu:act-22.04
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/TerraformServiceRole
+          role-session-name: github-actions
+          aws-region: eu-central-1
+
+      - name: cleanup preview
+        run: |
+          npm ci && npx sst remove --stage ${{ github.event.number }}
