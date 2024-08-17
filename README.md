@@ -49,3 +49,9 @@ You do not need to use the dev mode to deploy your app for testing. This reposit
 when creating a pull request. After merging the pull request the app will be deployed to production. This way you do not need to configure AWS credentials on your local machine.
 
 
+## What's next?
+
+Right now this example app is just a simple hello world Lambda function. 
+For the future we plan to provide more examples and best practices for building Shopware app-backends with node.js and typescript including the use of a JavaScript SDK for Shopware apps.
+We will also be adding more infrastructure components like DynamoDB tables, S3 buckets and cloudfront distributions for static site hosting.
+

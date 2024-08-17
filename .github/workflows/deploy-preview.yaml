@@ -2,6 +2,7 @@ name: deploy preview
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   id-token: write

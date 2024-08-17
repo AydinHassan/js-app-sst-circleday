@@ -8,5 +8,14 @@ export default $config({
             home: "aws",
         };
     },
-    async run() { },
+    async run() {
+        const hono = new sst.aws.Function("Hono", {
+            url: true,
+            handler: "index.handler",
+        });
+
+        return {
+            api: hono.url,
+        }
+    },
 });

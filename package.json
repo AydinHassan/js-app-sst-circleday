@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "hono": "^4.5.5",
-    "sst": "ion"
+    "sst": "^3.0.42"
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.143"
