@@ -1,0 +1,31 @@
+name: deploy production
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: deploy production
+    runs-on: shopware-arm64
+    container: ghcr.io/catthehacker/ubuntu:act-22.04
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/TerraformServiceRole
+          role-session-name: github-actions
+          aws-region: eu-central-1
+
+      - name: deploy production
+        run: |
+          npm ci && npx sst deploy --stage production

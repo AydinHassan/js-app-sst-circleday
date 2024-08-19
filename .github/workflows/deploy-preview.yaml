@@ -1,0 +1,50 @@
+name: deploy preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  deploy:
+    name: deploy preview
+    runs-on: shopware-arm64
+    container: ghcr.io/catthehacker/ubuntu:act-22.04
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/TerraformServiceRole
+          role-session-name: github-actions
+          aws-region: eu-central-1
+
+      - name: deploy preview
+        run: |
+          npm ci && npx sst deploy --stage ${{ github.event.number }}
+
+      - uses: actions/github-script@v7
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            const fs = require('fs');
+            const json = fs.readFileSync('./.sst/outputs.json', 'utf8');
+            const preview_url = JSON.parse(json).api;
+            const output = `Preview deployed to AWS: ${preview_url}
+
+            Pushed by: @${{ github.actor }}
+            Action: \`${{ github.event_name }}\``;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
