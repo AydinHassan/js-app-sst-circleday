@@ -55,3 +55,4 @@ Right now this example app is just a simple hello world Lambda function.
 For the future we plan to provide more examples and best practices for building Shopware app-backends with node.js and typescript including the use of a JavaScript SDK for Shopware apps.
 We will also be adding more infrastructure components like DynamoDB tables, S3 buckets and cloudfront distributions for static site hosting.
 
+If you want to add more capabilities yourself using `sst` checkout their documentation and how to use it here: https://sst.dev/docs

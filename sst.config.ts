@@ -12,6 +12,9 @@ export default $config({
         const hono = new sst.aws.Function("Hono", {
             url: true,
             handler: "index.handler",
+            environment: {
+                NAME: 'friend'
+            }
         });
 
         return {

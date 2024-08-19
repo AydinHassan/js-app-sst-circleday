@@ -3,6 +3,7 @@ import { handle } from 'hono/aws-lambda'
 
 const app = new Hono()
 
-app.get("/", c => c.text("hello friend."))
+const name = process.env.NAME
+app.get("/", c => c.text(`hello ${name}.`))
 
 export const handler = handle(app)
