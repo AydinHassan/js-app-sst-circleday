@@ -3,13 +3,18 @@
 export default $config({
     app(input) {
         return {
-            name: "serverless-hello-world-app",
+            name: "serverless-hello-world",
             removal: input?.stage === "production" ? "retain" : "remove",
             home: "aws",
         };
     },
     async run() {
-        const hono = new sst.aws.Function("Hono", {
+        const hostedZone = await aws.route53.getZone({
+            name: "apps.shopware.io",
+            privateZone: false,
+        })
+
+        const hono = new sst.aws.Function("hono", {
             url: true,
             handler: "index.handler",
             environment: {
@@ -17,8 +22,21 @@ export default $config({
             }
         });
 
+        const router = new sst.aws.Router("hello-world", {
+            routes: {
+                "/*": hono.url
+            },
+            domain: {
+                name: $app.stage === "production" ? `${$app.name}.${hostedZone.name}` : `${$app.name}-${$app.stage}.${hostedZone.name}`,
+                dns: sst.aws.dns({
+                    zone: hostedZone.zoneId
+                })
+            }
+        })
+
         return {
             api: hono.url,
+            router: router.url,
         }
     },
 });

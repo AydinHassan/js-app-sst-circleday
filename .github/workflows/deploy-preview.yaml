@@ -36,8 +36,15 @@ jobs:
           script: |
             const fs = require('fs');
             const json = fs.readFileSync('./.sst/outputs.json', 'utf8');
-            const preview_url = JSON.parse(json).api;
-            const output = `Preview deployed to AWS: ${preview_url}
+            const jsonObj = JSON.parse(json);
+            let output = "";
+            for (let key in jsonObj) {
+              if (jsonObj.hasOwnProperty(key)) {
+                output += `\`${key}\`: ${jsonObj[key]}\n`;
+              }
+            };
+            const comment = `Preview deployed to AWS:
+            ${output}
 
             Pushed by: @${{ github.actor }}
             Action: \`${{ github.event_name }}\``;
@@ -46,5 +53,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: output
+              body: comment
             })
