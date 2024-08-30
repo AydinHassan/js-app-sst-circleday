@@ -9,9 +9,9 @@
   "author": "shopware AG",
   "license": "MIT",
   "dependencies": {
-    "@shopware-ag/app-server-sdk": "^1.0.0",
-    "@shopware-ag/app-server-sdk-dynamodb": "^1.0.0",
-    "@shopware-ag/app-server-sdk-hono": "^1.0.0",
+    "@shopware-ag/app-server-sdk": "^1.0.1",
+    "@shopware-ag/app-server-sdk-dynamodb": "^1.0.1",
+    "@shopware-ag/app-server-sdk-hono": "^1.0.1",
     "hono": "^4.5.5",
     "sst": "^3.0.75"
   },
