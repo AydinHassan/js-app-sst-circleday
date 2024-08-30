@@ -14,8 +14,16 @@ export default $config({
             privateZone: false,
         })
 
+        const table = new sst.aws.Dynamo("shop", {
+            fields: {
+                id: "string"
+            },
+            primaryIndex: { hashKey: "id" }
+        });
+
         const hono = new sst.aws.Function("hono", {
             url: true,
+            link: [table],
             handler: "index.handler",
             environment: {
                 NAME: 'friend'
