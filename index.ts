@@ -9,6 +9,7 @@ import type {
     ShopInterface,
 } from '@shopware-ag/app-server-sdk';
 import { createNotificationResponse } from '@shopware-ag/app-server-sdk/helper/app-actions';
+import { Resource } from "sst";
 
 declare module "hono" {
     interface ContextVariableMap {
@@ -24,7 +25,7 @@ const client = new DynamoDBClient();
 configureAppServer(app, {
     appName: process.env.APP_NAME as string,
     appSecret: process.env.APP_SECRET as string,
-    shopRepository: new DynamoDBRepository(client, 'shop')
+    shopRepository: new DynamoDBRepository(client, Resource.shop.name)
 });
 
 const name = process.env.NAME

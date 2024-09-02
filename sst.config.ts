@@ -6,7 +6,6 @@ export default $config({
             name: "serverless-hello-world",
             removal: input?.stage === "production" ? "retain" : "remove",
             home: "aws",
-            providers: { datadog: true },
         };
     },
 
@@ -15,11 +14,6 @@ export default $config({
             name: "apps.shopware.io",
             privateZone: false,
         });
-
-        // const ddApiKeySecret = await aws.secretsmanager
-        //     .getSecret({
-        //         name: "production-datadog-api-key",
-        //     });
 
         const table = new sst.aws.Dynamo("shop", {
             fields: {
@@ -31,17 +25,10 @@ export default $config({
         const hono = new sst.aws.Function("hono", {
             url: true,
             link: [table],
-            // layers: [
-            //     "arn:aws:lambda:eu-central-1:464622532012:layer:Datadog-Node20-x:115",
-            //     "arn:aws:lambda:eu-central-1:464622532012:layer:Datadog-Extension:64"
-            // ],
             handler: "index.handler",
             environment: {
-                // DD_LAMBDA_HANDLER: "index.handler",
-                // DD_SITE: "datadoghq.eu",
-                // DD_API_KEY_SECRET_ARN: ddApiKeySecret.arn,
                 NAME: "friend",
-                APP_NAME: "ServerlessHelloWorldExample",
+                APP_NAME: "ServerlessHelloWorldExampleApp",
                 APP_SECRET: "ServerlessHelloWorldExampleSecret",
             },
         });
