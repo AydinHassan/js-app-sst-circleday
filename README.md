@@ -1,7 +1,7 @@
 # Serverless Hello World Example 
 
-This is a simple example of an app utilizing [sst](https://ion.sst.dev/docs/) to create a serverless function with AWS Lambda
-to show how to build javascript app-backends for Shopware.
+This is a simple example of a Shopware app-backend utilizing the [app-sdk-js](https://github.com/shopware/app-sdk-js/) and [sst](https://ion.sst.dev/docs/) 
+to create a serverless function with AWS Lambda and DynamoDB showcasing how to build javascript app-backends for Shopware including cost efficient infrastructure.
 
 ## Why sst?
 
@@ -47,12 +47,13 @@ npx sst remove
 
 You do not need to use the dev mode to deploy your app for testing. This repository also includes github-actions which will automatically deploy a staging preview
 when creating a pull request. After merging the pull request the app will be deployed to production. This way you do not need to configure AWS credentials on your local machine.
+The preview environment is also automatically destroyed by a cleanup job after the corresponding pull request is closed or merged.
 
 
 ## What's next?
 
-Right now this example app is just a simple hello world Lambda function. 
-For the future we plan to provide more examples and best practices for building Shopware app-backends with node.js and typescript including the use of a JavaScript SDK for Shopware apps.
-We will also be adding more infrastructure components like DynamoDB tables, S3 buckets and cloudfront distributions for static site hosting.
+Right now this example app is just a simple hello world Lambda function providing an action button. It is using DynamoDB as data store for the app registration process.
+Using sst and pulumi in the background allows to add even more infrastructure components like S3 buckets and cloudfront distributions for static site hosting which should 
+cover other app-backend use-cases that we would like to explore in the future.
 
 If you want to add more capabilities yourself using `sst` checkout their documentation and how to use it here: https://sst.dev/docs
