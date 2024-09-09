@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/aws-lambda';
-import { configureAppServer } from '@shopware-ag/app-server-sdk-hono';
-import { DynamoDBRepository } from '@shopware-ag/app-server-sdk-dynamodb';
+import { configureAppServer } from '@shopware-ag/app-server-sdk/integration/hono';
+import { DynamoDBRepository } from '@shopware-ag/app-server-sdk/integration/dynamodb';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import type {
     AppServer,
