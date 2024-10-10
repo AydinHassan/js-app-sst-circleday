@@ -13,7 +13,7 @@
     "@aws-sdk/lib-dynamodb": "~3.637.0",
     "@shopware-ag/app-server-sdk": "^1.1.3",
     "hono": "^4.5.5",
-    "sst": "^3.0.75"
+    "sst": "^3"
   },
   "devDependencies": {
     "@types/aws-lambda": "8.10.143",
