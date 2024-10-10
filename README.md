@@ -49,6 +49,10 @@ You do not need to use the dev mode to deploy your app for testing. This reposit
 when creating a pull request. After merging the pull request the app will be deployed to production. This way you do not need to configure AWS credentials on your local machine.
 The preview environment is also automatically destroyed by a cleanup job after the corresponding pull request is closed or merged.
 
+If you are using this repository as a template make sure to include the required github actions secrets containing information about your AWS account.
+- `AWS_ROLE_ARN`: The arn of the role to use to deploy your infrastructure (needs sufficient permissions)
+- `AWS_ROLE_SESSION_NAME`: An identifier used with the defined role to better distinguish automated actions coming from github in your AWS account
+- `AWS_REGION`: The AWS region to deploy to (e.g. eu-central-1)
 
 ## What's next?
 
