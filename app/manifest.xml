@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/Framework/App/Manifest/Schema/manifest-2.0.xsd">
+    <meta>
+        <name>BakedBeans</name>
+        <label>BakedBeans</label>
+        <description>BakedBeans</description>
+        <author>Aydin Hassan</author>
+        <copyright>Aydin Hassan</copyright>
+        <version>1.0.11</version>
+        <license>MIT</license>
+    </meta>
+
+    <setup>
+        <registrationUrl>https://d39wi8dknng8ic.cloudfront.net/app/register</registrationUrl>
+        <secret>BakedBeansSecret</secret>
+    </setup>
+
+    <admin>
+        <action-button action="exportOrderCsv" entity="order" view="detail" url="https://d39wi8dknng8ic.cloudfront.net/app/re-export">
+            <label>Export Order As CSV</label>
+        </action-button>
+    </admin>
+
+    <webhooks>
+        <webhook name="order-created" url="https://d39wi8dknng8ic.cloudfront.net/app/event/order-created" event="order.written"/>
+    </webhooks>
+
+    <permissions>
+        <read>order</read>
+        <read>product</read>
+        <read>media_folder</read>
+        <read>order_address</read>
+        <create>media_folder</create>
+        <create>media_folder_configuration</create>
+        <create>media</create>
+        <delete>media</delete>
+    </permissions>
+</manifest>

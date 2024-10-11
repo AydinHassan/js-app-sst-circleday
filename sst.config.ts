@@ -3,18 +3,13 @@
 export default $config({
     app(input) {
         return {
-            name: "serverless-hello-world",
+            name: "baked-beans",
             removal: input?.stage === "production" ? "retain" : "remove",
             home: "aws",
         };
     },
 
     async run() {
-        const hostedZone = await aws.route53.getZone({
-            name: "apps.shopware.io",
-            privateZone: false,
-        });
-
         const table = new sst.aws.Dynamo("shop", {
             fields: {
                 id: "string",
@@ -28,8 +23,8 @@ export default $config({
             handler: "index.handler",
             environment: {
                 NAME: "friend",
-                APP_NAME: "ServerlessHelloWorldExampleApp",
-                APP_SECRET: "ServerlessHelloWorldExampleSecret",
+                APP_NAME: "BakedBeans",
+                APP_SECRET: "BakedBeansSecret",
             },
         });
 
@@ -37,21 +32,11 @@ export default $config({
             routes: {
                 "/*": hono.url,
             },
-            domain: {
-                name:
-                    $app.stage === "production"
-                        ? `${$app.name}.${hostedZone.name}`
-                        : `${$app.name}-${$app.stage}.${hostedZone.name}`,
-                dns: sst.aws.dns({
-                    zone: hostedZone.zoneId,
-                }),
-            },
         });
 
         return {
             api: hono.url,
             router: router.url,
         };
-
     },
 });
